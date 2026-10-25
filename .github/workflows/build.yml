@@ -1,0 +1,20 @@
+name: build
+on:
+  push:
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: devkitpro/devkitarm
+    steps:
+      - uses: actions/checkout@v4
+      - name: Descargar minimp3
+        run: curl -L -o include/minimp3.h https://raw.githubusercontent.com/lieff/minimp3/master/minimp3.h
+      - name: Compilar
+        run: make
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ytmusic3ds
+          path: |
+            ytmusic3ds.3dsx
+            ytmusic3ds.smdh
